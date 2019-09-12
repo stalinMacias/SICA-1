@@ -6,11 +6,6 @@
 	echo "Correo: " . $_POST["correo"] . "<br>";
 	echo "Nombre: " . $_POST["nombre"] . "<br>";
 
-	$mailHost = "smtp.google.com";
-	$mailUser = "dario.vazquez@administrativos.udg.mx";
-	$mailPassword = "CUSur123";
-	$mailPort = 587;
-
 	if (isset($_POST["opcion"]) && isset($_POST["correo"]) && isset($_POST["nombre"]) ){
 		$opcion = $_POST["opcion"];
 		$correo = $_POST["correo"];
@@ -106,11 +101,12 @@
 			$mail = new PHPMailer;
 			$mail->IsSMTP();
 
-			$mail->Host = MAIL_HOST;
-			$mail->Port = MAIL_PORT;
+			$mail->IsSMTP();
+			$mail->Host = 'smtp.gmail.com';
+			$mail->Port = 587;
 			$mail->SMTPAuth = true;
-			$mail->Username = MAIL_USERNAME;
-			$mail->Password = MAIL_PASSWORD;
+			$mail->Username = 'dario.vazquez@administrativos.udg.mx';
+			$mail->Password = 'CUSur123';
 			$mail->SMTPSecure = 'tls';
 
 			$mail->SetFrom (MAIL_USERNAME,"Sistema de Control de Asistencia(SiCA) CUSUR");
