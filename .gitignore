@@ -1,2 +1,11 @@
-**/dist/*
-SicaWeb/dist/*
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+target/
+
+### Ignore files ending with this extention ###
+.class
