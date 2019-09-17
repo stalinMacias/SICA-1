@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="990.0" prefWidth="1180.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <bottom>
+    <ImageView fitHeight="98.0" fitWidth="1280.0" BorderPane.alignment="CENTER">
+      <image>1  
+        <Image url="@../../../images/foot.jpg" />
+      </image>
+    </ImageView>
+  </bottom>
+  <center>
+    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <children>
+        <Label style="-fx-font-weight: bold;" text="Sistema de Control de Asistencia (SiCA) V 2.0" />
+        <Label text="Desarrollado por el Centro Universitario de los Valles" />
+        <Label text="Secretaría Administrativa - Coordinación de Personal" />
+        <Label text=" " />
+        <Label style="-fx-font-weight: bold" text="Rectoría" />
+        <Label text="Dr. José Luis Santana Medina" />
+        <Label style="-fx-font-weight: bold" text="Secretaría Académica" />
+        <Label text="Dr. Victor Manuel Castillo Girón" />
+        <Label style="-fx-font-weight: bold" text="Secretaría Administrativa" />
+        <Label text="Mtro. Marco Tulio Daza Ramírez" />
+        <Label style="-fx-font-weight: bold" text="División de Estudios Económicos y Sociales" />
+        <Label text="Dra. María Isabel Arreola Caro" />
+        <Label style="-fx-font-weight: bold" text="División de Estudios Científicos y Tecnológicos" />
+        <Label text="Dr. José Guadalupe Rosas Elguera" />
+        <Label style="-fx-font-weight: bold" text="División de Estudios de la Salud" />
+        <Label text="Dr. José Guadalupe Salazar Estrada " />
+        <Label text=" " />
+        <Label style="-fx-font-weight: bold;" text="Equipo de Desarrollo" />
+        <Label text="Mtro. Marco Tulio Daza Ramírez" />
+        <Label text="Mtra. Carmen Elvira Hernández" />
+        <Label text="Mtro. Francisco Eduardo Oliva Ibarra" />
+        <Label text="Lic. Hugo Iván Uh Peredo " />
+        <Label text="Lic. Cindy Yolanda  Sánchez Ruiz" />
+        <Label text="C. Susana Karina Gracia Guillen " />
+        <Label text="C. Diego Misael Ramírez López" />
+        <Label text="C. Luis Alejandro Martínez López " />
+        <Label text="C. Jose de Jesus Zavala Guitierrez" />
+        <Label text="C. Alan Gilberto Parra Robledo" />
+        <Label text="C. Cesar Eduardo Chipol Velasco" />
+      </children>
+    </VBox>
+  </center>
+  <top>
+    <ImageView fitHeight="92.0" fitWidth="1280.0" BorderPane.alignment="CENTER">
+      <image>
+        <Image url="@../../../images/membrete.jpg" />
+      </image>
+    </ImageView>
+  </top>
+</BorderPane>

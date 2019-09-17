@@ -9,3 +9,7 @@ target/
 
 ### Ignore files ending with this extention ###
 .class
+/sica2.9.1/nbproject/private/
+/sica-common/nbproject/private/
+/sica-core/nbproject/private/
+/SicaSpasa/nbproject/private/
