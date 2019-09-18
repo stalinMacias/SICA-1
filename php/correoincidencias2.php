@@ -102,11 +102,11 @@
 			$mail->IsSMTP();
 
 			$mail->IsSMTP();
-			$mail->Host = 'smtp.gmail.com';
-			$mail->Port = 587;
+			$mail->Host = MAIL_HOST;
+			$mail->Port = MAIL_PORT;
+			$mail->Username = MAIL_USERNAME;
+			$mail->Password = MAIL_PASSWORD;
 			$mail->SMTPAuth = true;
-			$mail->Username = 'dario.vazquez@administrativos.udg.mx';
-			$mail->Password = 'CUSur123';
 			$mail->SMTPSecure = 'tls';
 
 			$mail->SetFrom (MAIL_USERNAME,"Sistema de Control de Asistencia(SiCA) CUSUR");

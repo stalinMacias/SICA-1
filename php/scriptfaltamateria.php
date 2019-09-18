@@ -1,8 +1,10 @@
 <?php //Codigo por Set Martinez, resuelve el envio de correos por faltas a clase
-	date_default_timezone_set("America/Mexico_City");
-	//$hora = date("H") - 2;
-	$hora = $_POST['time'];
-	echo $hora;
+	date_default_timezone_set("America/Mexico_City");	
+  $hora = ((int)date("H")) - 2;
+	//$hora = $argv[1];
+	//echo $hora;
+
+
 
 
 	if ($hora==8 || $hora==10 || $hora==12 || $hora==14 || $hora==16 || $hora==18){
@@ -19,7 +21,7 @@
 
 			while($row = mysqli_fetch_assoc($result)) {
 
-				echo $row['nombre']."<br>";
+				echo $row['nombre'].": ";
 				echo $hora."<br>";
 				//echo var_dump($row);
 
@@ -36,7 +38,7 @@
 					$mail->Username = MAIL_USERNAME;
 					$mail->Password = MAIL_PASSWORD;
 					$mail->SMTPAuth = true;
-					$mail->SMTPSecure = 'tls';					
+					$mail->SMTPSecure = 'tls';
 
 					$mail->SetFrom (MAIL_USERNAME,"Sistema de Control de Asistencia(SiCA) CUSUR");
 
