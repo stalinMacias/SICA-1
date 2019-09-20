@@ -27,6 +27,7 @@ import sica.LocalDB;
 import sica.ScannerCapturator;
 import sica.Screen;
 import sica.ScreenManager;
+import sica.Updater;
 import sica.common.DBQueries;
 import sica.common.objetos.Departamento;
 import sica.common.usuarios.StatusUsuario;
@@ -69,6 +70,8 @@ public class AdminUsuario extends Screen implements Initializable {
             }
         });
         
+        //Se ejecuta cada vez que se realiza una busqueda de un usuario o cuando se modifica!
+        //Es decir ---> cada que se presiona enter o el campo codigo pierde el focus
         usuario.addListener((Observable o) -> {
             Usuario t1 = usuario.get();
             if (t1 != null){
@@ -134,7 +137,9 @@ public class AdminUsuario extends Screen implements Initializable {
     }
     
     @FXML protected void guardarActualizar(){
-        if (usuario.get() != null){ //Editando
+        //Primeramente se realizará la busqueda del usuario para que se cree el objeto Usuario que se requiere para el manejo de datos a las llamadas de la base de datos!
+        buscarUsuario();
+        if (usuario.get() != null){ //Modificar un usuario existente
             if (nombre.getText()!=null
                     && !nombre.getText().isEmpty() 
                     && !tipo.getSelectionModel().isEmpty()
@@ -149,7 +154,6 @@ public class AdminUsuario extends Screen implements Initializable {
                             depto.getValue().getCodigo(),                            
                             telefono.getText(),
                             "");
-
                 if (res){
                     ScreenManager.principal().avisar("Usuario actualizado");
                     codigo.setEditable(false);
@@ -162,7 +166,6 @@ public class AdminUsuario extends Screen implements Initializable {
             }
             
         } else {  //Nuevo             
-        
             if ( codigo.getText()!=null
                     && codigo.getText().matches("[0-9]+")
                     && nombre.getText()!=null
@@ -170,7 +173,6 @@ public class AdminUsuario extends Screen implements Initializable {
                     && !tipo.getSelectionModel().isEmpty()
                     && !status.getSelectionModel().isEmpty()
                     && !depto.getSelectionModel().isEmpty()) {
-                
                 boolean res = DBQueries.insertUsuario(
                         codigo.getText(),
                         nombre.getText().toUpperCase(), 
@@ -179,31 +181,42 @@ public class AdminUsuario extends Screen implements Initializable {
                         depto.getValue().getCodigo(),                         
                         telefono.getText(),
                         "");
-                
                 DBQueries.addCorreoUsuario(codigo.getText(),correo.getText());
                 
                 if (res){
-                    ScreenManager.principal().avisar("Usuario guardado");
                     codigo.setEditable(false);
                     scan.setUser(codigo.getText());
                     scan.startCapturing();
+                    //Despues que el usuario ha sido creado en la base del servidor, se tiene que sincronizar la base local!
+                    Updater.update(true);        
+                    ScreenManager.principal().avisar("Usuario guardado");
                 } else {
+                    System.out.println("Errror en res");
                     ScreenManager.principal().avisar("Error guardando usuario!");
                 }
-                
             }  else {
-                ScreenManager.principal().avisar("Introducir los datos obligatorios");
-                log.error("Introducir los datos obligatorios");
+                ScreenManager.principal().avisar("Introducir todos los datos obligatorios");
+                log.error("Introducir todos los datos obligatorios");
             }
         }
             
-        
+
     }
 
     @FXML private void limpiar(){
-        codigo.setText(null);
+        //Limpiar los campos de texto y los combo box de la información del usario
+        codigo.clear();
         codigo.setEditable(true);
+        nombre.clear();
+        correo.clear();
+        correo.setEditable(true);
+        telefono.clear();
+        tipo.getSelectionModel().clearSelection();
+        status.getSelectionModel().clearSelection();
+        depto.getSelectionModel().clearSelection();  
+        //Limpiar el objeto usuario
         usuario.set(null);   
+        //Limpiar campos relacionados con la captura de la huella
         scan.setUser(null);
         scan.stopCapturing();
         cantidadHuellas.set(0);
