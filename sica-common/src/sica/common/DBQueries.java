@@ -333,7 +333,6 @@ public class DBQueries {
             depto,
             telefono,
             coment);
-
         return new PHPExecuter(query).getResponse();        
         
     }
