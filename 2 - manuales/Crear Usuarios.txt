@@ -1,0 +1,28 @@
+Proceso para crear un usuario nuevo desde sl Sistema SiCA Web:
+
+1.- Llenar los datos de la sección llamada "General", (telefono y comentarios son opcionales)
+    (Tambien el correo es opcional, pero se recomienda agregarlo de una vez, ya que a ese correo serán enviadas las incidencias)
+
+2.- Una vez llenados los datos, click en el boton de "Guardar"
+3.- Esperar a que se cree el usuario y aparezca en la tabla de la izquierda, seleccionarlo y esperar a que carguen los datos del usuario en el formulario de la derecha
+4.- Una vez que los datos esten cargados, clickear el boton de "Agregar" para que se registre el correo en la base de datos!
+5.- Sí se desea agregar una fotografia al usuario, seleccionar el apartado de fotografia y clickear el boton "Subir/Actualizar"
+    * ES IMPORTANTE QUE LA FOTOGRAFIA QUE SE DESEA ASIGNAR SE ENCUENTRE EN LA CARPETA FOTOS DEL SERVIDOR Y COMO NOMBRE DEBERÁ TENER EL CODIGO DEL USUARIO....
+
+
+6.- Queda pendiente saber como funciona las secciones de horario y asignaturas...
+
+
+****************** Hasta este punto se ha creado el usuario y como contraseña se le asigno por default : "hola123" **************************
+
+Proceso para registrar una huella al usuario recien creado:
+  * Este proceso se realiza desde el sistema SiCA2
+1.- Entrar con un perfil de administrador
+2.- Seleccionar la opción "Adminisración de Usuarios"
+3.- Ingresar el código del usuario al que se desea registrar una huella y dar enter
+4.- Cuando aparezcan los datos del usuario es momento de capturar la huella
+5.- El proceso de captura se ve reflejado en la barra de progreso de la parte derecha, se necesita capturar 4 veces la huella para que se almacene en la base de datos
+6.- Una vez que se hayan capturado 4 veces la huella será almacenada de manera automatica
+7.- Por ultimo tenemos que sincronizar la base de datos local con la del servidor, para esto volvemos al menú principal y seleccionamos la opción de "Actualizar Base de Datos Local"
+
+*** Y con eso hemos terminado de crear un nuevo usuario, asignarle una foto y registrarle su huella para que pueda hacer uso del checador ***
