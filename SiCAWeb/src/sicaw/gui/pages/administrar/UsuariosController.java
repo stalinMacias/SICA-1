@@ -220,7 +220,6 @@ public class UsuariosController implements Initializable {
     @FXML protected void subirFoto(){
         Usuario currentUser = tablaUsuarios.getSelectionModel().getSelectedItem();
         if (currentUser == null) return;
-        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar archivo");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -241,7 +240,7 @@ public class UsuariosController implements Initializable {
                         FileManagerTask.Type.UPLOAD,
                         FileManagerTask.Option.FOTOGRAFIA,
                         currentUser.getCodigo()+".jpg");
-                
+                System.out.println(fotoup);
                 fotoup.setOnSucceeded((WorkerStateEvent t) -> {
                     loadFoto();
                 });
@@ -271,7 +270,6 @@ public class UsuariosController implements Initializable {
         if (currentUser == null) return;
         
         String host = Configs.SERVER_FOTOS()+ currentUser.getCodigo()+".jpg";
-
         Image imagen = new Image(host);
 
         if (imagen.isError()){
