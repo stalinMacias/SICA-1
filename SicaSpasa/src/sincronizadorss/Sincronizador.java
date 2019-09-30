@@ -29,7 +29,7 @@ import sincronizadorss.objetos.SpasaMateria;
  */
 public class Sincronizador {
     public static ConexionMySQL conex = new ConexionMySQL();
-    private static final String urlSpasa = "http://www.cuvalles.udg.mx/spasa/php/sica/class.SICA.php"; ////  //"http://www.cuvalles.udg.mx/spasa/php/sica/class.SICA.php?f=getHJ&c=2017A"; "http://www.cuvalles.udg.mx/spasa/php/sica/class.SICA.php?f=getHJ&c=2018A";
+    private static final String urlSpasa = "http://148.202.119.30/php/sica/class.SICA.php"; ////  //"http://www.cuvalles.udg.mx/spasa/php/sica/class.SICA.php?f=getHJ&c=2017A"; "http://www.cuvalles.udg.mx/spasa/php/sica/class.SICA.php?f=getHJ&c=2018A";
     private static final String funHorJson = "getHJ";
     private static final String funMatJson = "getMJ";
     private static final String funDate = "d";
@@ -95,25 +95,30 @@ public class Sincronizador {
         JSONArray spasaMateriaJsons = new JSONArray();
         boolean JsonsFlag = false;
         
-        //procede a obtener Jsons de CRNS
+        //procede a obtener Jsons de CRNS[ [
         if(flagSinc){
             Logy.m("procediendo a obtener Jsons de Spasa");
             String urlConsulta = urlSpasa + "?f=getHJ&c=" + hoyAnio() + cicloLetra;
             Logy.mi("se hara la consulta -> " + urlConsulta );
             String crns = getContenidoHTML(urlConsulta);
-            Logy.m("pasando a Json lo obtenido de spasa crn");
-            //JSONObject jsonObj = new JSONObject(crns); eso para cuando no son arrays
-            spasaCRNJsons = new JSONArray(crns); 
+            Logy.m("pasando a Json lo obtenido de spasa crn");                        
+            crns = crns.substring(1, crns.length());
+            //crns = crns.substring(1, crns.length());     
+            //crns = "[" + crns;            
+            //JSONObject jsonObj = new JSONObject(aux); //eso para cuando no son arrays                        
+                        
+            spasaCRNJsons = new JSONArray(crns);             
             Logy.m("se supone que ya se paso");
             Logy.m("crn_cpr: " + spasaCRNJsons.getJSONObject(0).get("crn_cpr"));
             
             //obteniendo Jsons de Materias
-            Logy.m("Obteniendo Jsons de materias");
+            Logy.m("Obteniendo Jsons de materias");            
             String urlConsultaM = urlSpasa + "?f=getMJ&c=" + hoyAnio() + cicloLetra;
             Logy.mi("se hara la consulta materias -> " + urlConsultaM );
             String materias = getContenidoHTML(urlConsultaM);
+            materias = materias.substring(1, materias.length());            
             Logy.m("pasando a Json lo obtenido de spasa materias");
-            spasaMateriaJsons = new JSONArray(materias); 
+            spasaMateriaJsons = new JSONArray(materias);             
             
             
             //los 2 Jsons son correcots?
@@ -451,7 +456,7 @@ public class Sincronizador {
     
     private static void corregirHorarios(List<SicaHorarioCRN> horarios){
         
-        for(SicaHorarioCRN h : horarios){
+        /*for(SicaHorarioCRN h : horarios){
             if(h.getHora().length() == 1){ //osea es de 1 digitos
                 h.setHora( "0" + h.getHora() + ":00:00" );
                 
@@ -460,6 +465,9 @@ public class Sincronizador {
             }else{
                 Logy.me("error la hora de un SicaHorarioCRN es erronea: crn=" + h.getCrn() + " hora=" +h.getHora());
             }
+        }*/
+        for (SicaHorarioCRN h: horarios) {
+            h.setHora(formatoHora(h.getHora()));
         }
         
     }
@@ -549,20 +557,37 @@ public class Sincronizador {
         int ini = Integer.valueOf(horaIni);
         int sal = Integer.valueOf(horaSal);
         
+        // CORREGIR CALCULO DE DURACIÓN!
         int res = sal - ini;
+        if (res > 59) {
+            int horasExtra = (int)(res / 60);
+            res = (res - (60*horasExtra)) + (100 * horasExtra);
+        }
         String duracion = Integer.toString(res);
+        System.out.println("HORA INI: "+horaIni);
+        System.out.println("HORA SAL: "+horaSal);
+        System.out.println("RES: "+res);
+        duracion = formatoHora(duracion);
+        System.out.println("DURACION: "+duracion);        
         
-        if(duracion.length() == 1){
-            duracion = "0" + duracion + ":00:00";
-        }else if(duracion.length() == 2){
-            duracion = duracion + ":00:00";
-        }else{
+        
+        if(duracion.length() != 8){
             Logy.me("error extraño al calcular duracion, los digitos de la duracion constan con de mas o de menos digitos");
             Logy.me("no se pudo calcular la duracion de clase, se asigna por default 2:00 hrs");
-            duracion = "2:00:00";
-        }
+            duracion = "02:00:00";            
+        }                    
         
         return duracion;
+    }
+    
+    public static String formatoHora(String hora) {        
+        if (hora.length() == 3) hora = "0"+hora;
+        if (hora.length() == 2) hora = "00"+hora;
+        if (hora.length() == 1) hora = "000"+hora;
+        String hr = hora.substring(0, 2);
+        String min = hora.substring(2, 4);
+        
+        return hr+":"+min+":00";
     }
 
     public static boolean isOk() {
