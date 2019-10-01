@@ -552,22 +552,13 @@ public class Sincronizador {
         return hoy;
     }
     
-    public static String calcularDuracion(String horaIni, String horaSal){
+    public static String calcularDuracion(String horaIni, String horaSal){        
+        horaIni = formatoHora(horaIni);
+        horaSal = formatoHora(horaSal);
         
-        int ini = Integer.valueOf(horaIni);
-        int sal = Integer.valueOf(horaSal);
-        
-        // CORREGIR CALCULO DE DURACIÓN!
-        int res = sal - ini;
-        if (res > 59) {
-            int horasExtra = (int)(res / 60);
-            res = (res - (60*horasExtra)) + (100 * horasExtra);
-        }
-        String duracion = Integer.toString(res);
+        String duracion = getDuracion(horaIni, horaSal);
         System.out.println("HORA INI: "+horaIni);
-        System.out.println("HORA SAL: "+horaSal);
-        System.out.println("RES: "+res);
-        duracion = formatoHora(duracion);
+        System.out.println("HORA SAL: "+horaSal);                
         System.out.println("DURACION: "+duracion);        
         
         
@@ -578,6 +569,21 @@ public class Sincronizador {
         }                    
         
         return duracion;
+    }
+    
+    public static String getDuracion(String horaIni, String horaFin) {
+        String[] horaIniArr = horaIni.split(":");
+        String[] horaFinArr = horaFin.split(":");
+        
+        int minIni = Integer.parseInt(horaIniArr[0])*60 + Integer.parseInt(horaIniArr[1]);
+        int minFin = Integer.parseInt(horaFinArr[0])*60 + Integer.parseInt(horaFinArr[1]);
+        
+        int diferenciaMin = minFin - minIni;
+        int diferenciaHora = (int)(diferenciaMin/60);
+        
+        diferenciaMin -= diferenciaHora*60;
+        
+        return formatoHora(diferenciaHora+""+diferenciaMin);        
     }
     
     public static String formatoHora(String hora) {        
