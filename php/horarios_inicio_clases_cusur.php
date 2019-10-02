@@ -1,17 +1,50 @@
-<?php //Codigo por Set Martinez, resuelve el envio de correos por faltas a clase
-	date_default_timezone_set("America/Mexico_City");
-  	$hora = ((int)date("H")) - 2; //$hora = date("H") - 2;
+<?php
+    include("conectar.php");
+    include("class.phpmailer.php");
+    include("class.smtp.php");
 
-	if ($hora==8 || $hora==10 || $hora==12 || $hora==14 || $hora==16 || $hora==18){
-		include("conectar.php");
-		include("class.phpmailer.php");
-		include("class.smtp.php");
+    $horasMañana = array(
+        "07:00:00",
+        "07:10:00",
+        "07:20:00",
+        "07:25:00",
+        "07:30:00",
+        "07:40:00",
+        "08:00:00",
+        "08:10:00",
+        "08:30:00",
+        "08:40:00",
+        "09:00:00",
+        "09:05:00",
+        "09:10:00",
+        "09:20:00",
+        "09:30:00",
+        "10:00:00",
+        "10:10:00",
+        "10:30:00",
+        "11:00:00",
+        "11:30:00",
+        "11:40:00",
+        "12:00:00");
 
-		$query = "CALL get_faltas_clases_hora('$hora:00:00')";
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    $mail->SMTPAuth = false;
+    //$mail->SMTPSecure = "ssl";
+
+    $mail->Host = MAIL_HOST;
+    $mail->Port = MAIL_PORT;
+    $mail->Username = MAIL_USERNAME;
+    $mail->Password = MAIL_PASSWORD;
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'tls';
+    $mail->SetFrom (MAIL_USERNAME,"Sistema de Control de Asistencia(SiCA) CUSUR");
+
+    foreach($horasMañana as $hora) {        
+		$query = "CALL get_faltas_clases_hora('$hora')";
         set_time_limit(150);
-		//echo $query;
 
-		if ($result = mysqli_query($con, $query)) {
+        if ($result = mysqli_query($con, $query)) {
 			$today = date("d/m/Y");
 
 			while($row = mysqli_fetch_assoc($result)) {
@@ -21,21 +54,7 @@
 				//echo var_dump($row);
 
 				if (filter_var($row["correo"], FILTER_VALIDATE_EMAIL) && $row['crn'] != 147450 && $row['crn'] != 145069 ) {
-				    //enviar email
-
-				  $mail = new PHPMailer();
-					$mail->IsSMTP();
-					$mail->SMTPAuth = false;
-					//$mail->SMTPSecure = "ssl";
-
-					$mail->Host = MAIL_HOST;
-					$mail->Port = MAIL_PORT;
-					$mail->Username = MAIL_USERNAME;
-					$mail->Password = MAIL_PASSWORD;
-					$mail->SMTPAuth = true;
-					$mail->SMTPSecure = 'tls';
-
-					$mail->SetFrom (MAIL_USERNAME,"Sistema de Control de Asistencia(SiCA) CUSUR");
+				    //enviar email									
 
 					$mail->Subject = "CUSUR SICA - Falta a asignatura";
 					$mail->AltBody = "Correo de incidencia";
@@ -48,7 +67,7 @@
 					$mail->MsgHTML($mensaje);
 					$mail->IsHTML(true);
 					$mail->AddAddress($row["correo"],$row["nombre"]);
-					$mail->AddCC("buzonsica@valles.udg.mx","SiCA");
+					//$mail->AddCC("buzonsica@valles.udg.mx","SiCA");
 					//$mail->AddBCC('carmen.hernandez@valles.udg.mx');
 
 					$flag = false;
@@ -74,7 +93,5 @@
 		} else {
 			echo mysqli_error($con);
 		}
-	} else {
-		echo $hora.":00:00";
-	}
+    }    
 ?>
