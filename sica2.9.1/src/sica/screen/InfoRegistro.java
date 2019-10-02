@@ -220,7 +220,7 @@ public class InfoRegistro  extends Screen implements Initializable{
                     
                     infoReg.setText("Registro realizado con errores");
                     info.setText("Registro de materia fuera del tiempo de tolerancia. "
-                            + "Recuerde que la tolerancia es de 10 minutos antes y "
+                            + "Recuerde que la tolerancia es de 20 minutos antes y "
                             + "despues de la hora en que esta programada su asignatura");
 
                     horaTxt.setText("Hora registrada: "+Utils.formatTime(data.getRegistro().getFechahora()));
@@ -732,7 +732,7 @@ public class InfoRegistro  extends Screen implements Initializable{
                         case EYS_MATERIA_FUERATOLERANCIA:         //NUEVA TOLERANCIA
                             infoReg.setText("Registro realizado con errores");
                             info.setText("Registro de materia fuera del tiempo de tolerancia. "
-                                    + "Recuerde que la tolerancia es de 10 minutos antes y "
+                                    + "Recuerde que la tolerancia es de 20 minutos antes y "
                                     + "despues tanto a la hora de entrada como a la de salida en que esta programada su asignatura");
                             horaTxt.setText("Hora registrada: "+Utils.formatTime(data.getRegistro().getFechahora()));
                             break;
