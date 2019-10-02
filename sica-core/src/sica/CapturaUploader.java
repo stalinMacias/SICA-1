@@ -31,7 +31,7 @@ public class CapturaUploader extends Thread implements Runnable {
                 log.error("Nombre no establecido");
                 return;
             }
-            
+                        
             HttpURLConnection httpUrlConnection = (HttpURLConnection)
                     new URL( Configs.PHP_UPLOAD() +
                             "?type=u"+

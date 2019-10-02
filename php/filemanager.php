@@ -7,17 +7,19 @@
    */
 
   include ("../globals.php");
-  echo($dir."\\Fotos"."\\");
+  //echo($dir."\\Fotos"."\\");  
   if (isset($_GET['nombre']) && isset($_GET['type']) && isset($_GET['opc'])){
     $t = $_GET['type'];
 
     switch ($_GET['opc']) {
 
-      case 'j': $ruta = $dir."justificantes/"; break;
-      case 'f': $ruta = $dir."Fotos/"; break;
-      case 'c': $ruta = $dir."capturas/"; break;
+      case 'j': $ruta = $dir."\\justificantes\\"; break;
+      case 'f': $ruta = $dir."\\Fotos\\"; break;
+      case 'c': $ruta = $dir."\\capturas\\"; break;
       //default: $ruta = $dir."archivos/"; break;
     }
+
+    echo $ruta.$_GET['nombre']."<br>";
 
     $filename= $ruta.$_GET['nombre'];
     echo($t.$_GET['opc']."-".$filename."-");
