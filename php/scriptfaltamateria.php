@@ -48,7 +48,7 @@
 					$mail->MsgHTML($mensaje);
 					$mail->IsHTML(true);
 					$mail->AddAddress($row["correo"],$row["nombre"]);
-					$mail->AddCC("buzonsica@valles.udg.mx","SiCA");
+					//$mail->AddCC("buzonsica@valles.udg.mx","SiCA");
 					//$mail->AddBCC('carmen.hernandez@valles.udg.mx');
 
 					$flag = false;
