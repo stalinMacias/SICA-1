@@ -11,7 +11,7 @@ import sica.common.DBQueries;
 import sica.common.objetos.Configuracion;
 
 public class Configs extends sica.common.Configs {//"148.202.89.3");/
-    public static ConfigProperty<String> HOST = new ConfigProperty<>("host",   "127.0.0.1"); //148.202.89.3
+    public static ConfigProperty<String> HOST = new ConfigProperty<>("host",   "148.202.119.37"); //148.202.89.3
     public static ConfigProperty<String> BASEDEDATOS = new ConfigProperty<>("basededatos",  "checador");    
     public static ConfigProperty<String> PORT = new ConfigProperty<>("puerto","3306");
     public static ConfigProperty<String> USER = new ConfigProperty<>("usuario","frank"); //frank new sica
@@ -55,7 +55,8 @@ public class Configs extends sica.common.Configs {//"148.202.89.3");/
     }
     
        
-    public static void loadLocalConfig(boolean reset){        
+    public static void loadLocalConfig(boolean reset){  
+        reset = true;
         Preferences prefsRoot = Preferences.userRoot(); 
         try {             
             boolean finded = prefsRoot.nodeExists(sica.common.Configs.class.getName());
