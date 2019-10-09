@@ -101,10 +101,13 @@ public class Sincronizador {
             String urlConsulta = urlSpasa + "?f=getHJ&c=" + hoyAnio() + cicloLetra;
             Logy.mi("se hara la consulta -> " + urlConsulta );
             String crns = getContenidoHTML(urlConsulta);
-            Logy.m("pasando a Json lo obtenido de spasa crn");                        
-            crns = crns.substring(1, crns.length());
-            //crns = crns.substring(1, crns.length());     
-            //crns = "[" + crns;            
+            Logy.m("pasando a Json lo obtenido de spasa crn");
+            
+            // Quitando caracteres extraños en CRNS
+            int i = 0;
+            while(crns.charAt(i) != '[') i++;
+            
+            crns = crns.substring(i, crns.length());            
             //JSONObject jsonObj = new JSONObject(aux); //eso para cuando no son arrays                        
                         
             spasaCRNJsons = new JSONArray(crns);             
@@ -116,7 +119,12 @@ public class Sincronizador {
             String urlConsultaM = urlSpasa + "?f=getMJ&c=" + hoyAnio() + cicloLetra;
             Logy.mi("se hara la consulta materias -> " + urlConsultaM );
             String materias = getContenidoHTML(urlConsultaM);
-            materias = materias.substring(1, materias.length());            
+            
+            // Quitando caracteres extraños en materias
+            i = 0;
+            while(materias.charAt(i) != '[') i++;
+            
+            materias = materias.substring(i, materias.length());    
             Logy.m("pasando a Json lo obtenido de spasa materias");
             spasaMateriaJsons = new JSONArray(materias);             
             
