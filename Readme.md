@@ -61,3 +61,6 @@ Cierras el ejecutador y vuelves a dejar el m�todo como se encontraba!	---
 ## Update SiCA DataBase ##
 Dados los datos que actualmente existen en SPASA (30/09/2019) se debe de actualizar la longitud del atributo "aula" en la tabla "horarioscrn", de lo contrario cuando se ejecute el script para sincronizar SPASA con SiCA se genererarán errores....
 	* Recomendado actualizar la longitud a varchar(15), al clonar la base viene con varchar(5)
+
+
+Modificar procedimiento get_faltas_jornada: quitarle AND vigencia = NULL
